@@ -34,6 +34,10 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 	else if((changeInfo.url != undefined) && (tabId === youtubeTab)) {
 		youtubeOn = false;
 	}
+	else if((changeInfo.url == undefined) && (tabId === youtubeTab)) {		//checks for page reload
+		chrome.tabs.executeScript({file: "scripts/jquery-1.11.2.min.js"});
+ 		chrome.tabs.executeScript({file: "scripts/content.js"});
+	}
 });
 
 //Logic when closing youtube video tab

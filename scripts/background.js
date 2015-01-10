@@ -1,21 +1,19 @@
 var URL_IDENTIFIER = "youtube.com/watch";
 
-var paused = false;
 var youtubeOn = false;
 var youtubeTab = null;
 
 //Browser Action Logic
 chrome.browserAction.onClicked.addListener(function() {
 	if(youtubeOn) {
-		//get video state first (paused?)
-		if(paused) {
-			chrome.tabs.executeScript(youtubeTab, {code: 'document.getElementsByTagName("video")[0].play()'});
-			paused = false;
-		}
-		else {
-			chrome.tabs.executeScript(youtubeTab, {code: 'document.getElementsByTagName("video")[0].pause()'});
-			paused = true;
-		}
+		chrome.tabs.sendMessage(youtubeTab, {text: "pause/play"}, function(paused) {
+			if(paused) {
+				chrome.tabs.executeScript(youtubeTab, {code: 'document.getElementsByTagName("video")[0].play()'});
+			}
+			else {
+				chrome.tabs.executeScript(youtubeTab, {code: 'document.getElementsByTagName("video")[0].pause()'});
+			}
+		});
 	}
 	else {
 		alert("No YouTube video is currently playing");
@@ -28,13 +26,13 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
 		youtubeTab = tabId;
 		youtubeOn = true;
 
-	// chrome.tabs.executeScript({file: "scripts/jquery-1.11.2.min.js"});
- 	// chrome.tabs.executeScript({file: "scripts/content.js"});
+		//Inject content scripts
+		chrome.tabs.executeScript({file: "scripts/jquery-1.11.2.min.js"});
+ 		chrome.tabs.executeScript({file: "scripts/content.js"});
 
 	}
 	else if((changeInfo.url != undefined) && (tabId === youtubeTab)) {
 		youtubeOn = false;
-		paused = false;
 	}
 });
 

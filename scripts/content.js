@@ -1,12 +1,14 @@
 var videoElem = [];
+var video;
 
 $(document).ready(function() {
-	window.setTimeout(checkForVideo, 2000);		//allow time for video to fully load
+	window.setTimeout(checkForVideo, 2000);		//set delay so video can fully load
 });
 
+//Gets reference to video once fully loaded
 function checkForVideo () {
 	videoElem = document.getElementsByTagName('video');
-    var video = videoElem[0];
+    video = videoElem[0];
     if( $(video).attr("data-youtube-id") == "undefined" ) {
     	window.setTimeout(checkForVideo, 1000);
     }
@@ -15,5 +17,9 @@ function checkForVideo () {
     }
 };
 
-//http://stackoverflow.com/questions/19758028/chrome-extension-get-dom-content
-//chrome.runtime.onMessage.addListener(function(msg, sender, sendResponse))
+//Listen for the pause/play message sent during browser action
+chrome.runtime.onMessage.addListener(function(message, sender, response) {
+    if(message.text == "pause/play") {
+       response(video.paused);
+    }
+});

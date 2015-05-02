@@ -3,9 +3,6 @@ var video;
 
 $(document).ready(function() {
     window.setTimeout(checkForVideo, 2000);		//set delay so video can fully load
-    if(document.getElementById("speed-buttons") == null) {
-        createButtons();                        //create the speed buttons
-    }
 });
 
 //Gets reference to video once fully loaded
@@ -15,6 +12,11 @@ function checkForVideo () {
     
     if( video == "undefined" || video == null) {
     	window.setTimeout(checkForVideo, 1000);
+    }
+    else {
+        if(document.getElementById("speed-buttons") == null) {
+            createButtons();        //create the speed buttons
+        }
     }
 };
 

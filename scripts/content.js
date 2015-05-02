@@ -23,7 +23,7 @@ function createButtons() {
     //Speeds to use
     var speeds = [1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 4.0, 5.0, 6.0];
     //Will append our div to this object
-    var playerRef = document.getElementById("player");
+    var playerRef = document.getElementById("placeholder-player");
 
     //Create the buttonsDiv to hold the buttons
     var buttonsDiv = document.createElement("div");

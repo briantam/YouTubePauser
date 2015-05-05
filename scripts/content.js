@@ -31,8 +31,9 @@ function createButtons() {
     var buttonsDiv = document.createElement("div");
     buttonsDiv.id = "speed-buttons";
     buttonsDiv.style.height = "25px";
-    buttonsDiv.className = "player-width";
+    buttonsDiv.className = "player-width player-api";
     buttonsDiv.style.textAlign = "center";
+    buttonsDiv.style.backgroundColor = "transparent";
 
     //Create the speedButtons
     var buttons = [];
